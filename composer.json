@@ -1,0 +1,17 @@
+{
+    "name": "francerz/mx-imss",
+    "type": "library",
+    "license": "ISC",
+    "autoload": {
+        "psr-4": {
+            "Francerz\\MxImss\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Francerz",
+            "email": "10836837+francerz@users.noreply.github.com"
+        }
+    ],
+    "require": {}
+}
