@@ -22,7 +22,7 @@ class NumeroSeguro
      */
     public function __construct(string $nss)
     {
-        $this->nss = $nss;
+        $this->nss = static::normalizarNss($nss);
     }
 
     /**
@@ -32,11 +32,63 @@ class NumeroSeguro
      */
     public function esValido(): bool
     {
-        if (in_array(strlen($this->nss), [11])) {
+        return static::validar($this->nss);
+    }
+
+    /**
+     * Devuelve el NSS como cadena de texto.
+     *
+     * @return string El Número de Seguridad Social.
+     */
+    public function __toString()
+    {
+        return $this->nss;
+    }
+
+    /**
+     * Devuelve el Número de Seguridad Social en el formato xx-xx-xx-xxxx-x.
+     *
+     * @return string El NSS formateado.
+     */
+    public function getFormateado(): string
+    {
+        return sprintf(
+            '%s-%s-%s-%s-%s',
+            substr($this->nss, 0, 2),
+            substr($this->nss, 2, 2),
+            substr($this->nss, 4, 2),
+            substr($this->nss, 6, 4),
+            substr($this->nss, 10, 1)
+        );
+    }
+
+    /**
+     * Normaliza un Número de Seguridad Social eliminando todos los caracteres
+     * que no sean dígitos.
+     *
+     * @param string $nss El Número de Seguridad Social.
+     * @return string El NSS normalizado.
+     */
+    private static function normalizarNss(string $nss): string
+    {
+        return preg_replace('/[^0-9]/', '', $nss);
+    }
+
+    /**
+     * Valida un Número de Seguridad Social.
+     *
+     * @param string $nss El Número de Seguridad Social.
+     * @return bool True si el NSS es válido, False en caso contrario.
+     */
+    public static function validar(string $nss): bool
+    {
+        $nss = static::normalizarNss($nss);
+
+        if (in_array(strlen($nss), [11])) {
             return false;
         }
 
-        return static::verificarUltimoDigito($this->nss);
+        return static::verificarUltimoDigito($nss);
     }
 
     /**
