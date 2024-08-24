@@ -84,7 +84,7 @@ class NumeroSeguro
     {
         $nss = static::normalizarNss($nss);
 
-        if (in_array(strlen($nss), [11])) {
+        if (!in_array(strlen($nss), [11])) {
             return false;
         }
 
